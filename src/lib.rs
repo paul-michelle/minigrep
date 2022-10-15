@@ -1,24 +1,23 @@
-use std::{fs, error::Error};
+use std::{error::Error, fs};
 
-
-const QUERY_STRING_INDEX: usize      = 1;
-const TARGET_FILE_PATH_INDEX: usize  = 2;
+const QUERY_STRING_INDEX: usize = 1;
+const TARGET_FILE_PATH_INDEX: usize = 2;
 const MIN_ARGS_EXPECTED_COUNT: usize = 3;
 
-pub struct Config{
+pub struct Config {
     query_string: String,
-    file_path: String
+    file_path: String,
 }
 
 impl Config {
     pub fn build(args: &Vec<String>) -> Result<Self, &'static str> {
-        if args.len() < MIN_ARGS_EXPECTED_COUNT { 
+        if args.len() < MIN_ARGS_EXPECTED_COUNT {
             return Err("At least query string and target file path expected, \
-            e.g.: ./minigrep Savannah poem.txt")
+            e.g.: ./minigrep Savannah poem.txt");
         }
         Ok(Config {
             query_string: args[QUERY_STRING_INDEX].clone(),
-            file_path: args[TARGET_FILE_PATH_INDEX].clone()
+            file_path: args[TARGET_FILE_PATH_INDEX].clone(),
         })
     }
 }
