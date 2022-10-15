@@ -1,0 +1,13 @@
+[package]
+name = "minigrep"
+description = "A minimalistic regex search and print out tool implementation as per Ch.12 of The Rust Programming Language"
+keywords = ["grep", "regex", "search"]
+categories = ["command-line-utilities"]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.63.0"
+authors = ["Pavel Mikhalkevich <paul.michelle.prod@gmail.com>"]
+license = "MIT OR Apache-2.0"
+repository = "https://githcarub.com/paul-michelle/minigrep"
+
+[dependencies]
