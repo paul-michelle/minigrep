@@ -1,4 +1,4 @@
-use std::{env, fs, process};
+use std::{env, fs, process, error::Error};
 
 
 const QUERY_STRING_INDEX: usize      = 1;
@@ -23,12 +23,10 @@ impl Config {
     }
 }
 
-fn run(config: Config) {
-    let file_contents = match fs::read_to_string(&config.file_path) {
-        Ok(contents) => contents,
-        Err(_) => String::from("File not found.")
-    };
-    println!("{}", file_contents)
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let file_contents = fs::read_to_string(&config.file_path)?;
+    println!("{}", file_contents);
+    Ok(())
 }
 
 fn main() {
@@ -38,6 +36,12 @@ fn main() {
         println!("Failed to parse arguments: {}", err);
         process::exit(1);
     });
-    
-    run(config);
+
+    match run(config) {
+        Ok(_) => return,
+        Err(err) => {
+            println!("Failed to read file contents: {}", err);
+            process::exit(1)
+        }
+    }
 }
