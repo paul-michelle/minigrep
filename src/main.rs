@@ -37,11 +37,8 @@ fn main() {
         process::exit(1);
     });
 
-    match run(config) {
-        Ok(_) => return,
-        Err(err) => {
-            println!("Failed to read file contents: {}", err);
-            process::exit(1)
-        }
+    if let Err(e) = run(config) {
+        println!("Failed to read file contents: {}", e);
+        process::exit(1)
     }
 }
