@@ -1,5 +1,5 @@
 [package]
-name = "minigrep"
+name = "minigrepper"
 description = "A minimalistic regex search and print out tool implementation as per Ch.12 of The Rust Programming Language"
 keywords = ["grep", "regex", "search"]
 categories = ["command-line-utilities"]

@@ -1,4 +1,4 @@
-use minigrep as lib;
+use minigrepper as lib;
 use std::{env, process};
 
 fn main() {
