@@ -50,25 +50,18 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 }
 
 pub fn search<'a>(query: &str, contents: &'a str, ignore_case: bool) -> Vec<&'a str> {
-    let mut matches: Vec<&str> = Vec::new();
-
     if !ignore_case {
-        for line in contents.lines() {
-            if line.contains(query) {
-                matches.push(line)
-            }
-        }
-        return matches;
+        return contents
+            .lines()
+            .filter(|line| line.contains(query))
+            .collect();
     }
 
     let q = query.to_lowercase();
-    for line in contents.lines() {
-        if line.to_lowercase().contains(&q) {
-            matches.push(line)
-        }
-    }
-
-    matches
+    contents
+        .lines()
+        .filter(|line| line.to_lowercase().contains(&q))
+        .collect()
 }
 
 #[cfg(test)]
