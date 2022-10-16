@@ -1,8 +1,5 @@
 use std::{env, error::Error, fs};
 
-const QUERY_STRING_INDEX: usize = 1;
-const TARGET_FILE_PATH_INDEX: usize = 2;
-const MIN_ARGS_EXPECTED_COUNT: usize = 3;
 const IGNORE_CASE_ENVVAR_NAME: &str = "IGNORE_CASE";
 
 pub struct Config {
@@ -12,14 +9,19 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn build(args: &Vec<String>) -> Result<Self, &'static str> {
-        if args.len() < MIN_ARGS_EXPECTED_COUNT {
-            return Err("At least query string and target file path expected, \
-            e.g.: ./minigrep Savannah poem.txt");
-        }
+    pub fn build(mut args: impl Iterator<Item = String>) -> Result<Self, &'static str> {
+        args.next();
 
-        let query_string = args[QUERY_STRING_INDEX].clone();
-        let file_path = args[TARGET_FILE_PATH_INDEX].clone();
+        let query_string = match args.next() {
+            Some(val) => val,
+            None => return Err("Query string not provided."),
+        };
+
+        let file_path = match args.next() {
+            Some(val) => val,
+            None => return Err("Target file path not provided."),
+        };
+
         let ignore_case = match env::var(IGNORE_CASE_ENVVAR_NAME) {
             Ok(val) => val.eq_ignore_ascii_case("true") || val.eq("1"),
             Err(_) => false,
